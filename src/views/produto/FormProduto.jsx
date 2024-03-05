@@ -26,8 +26,9 @@ export default function FormProduto () {
                             <Form.Input
                                     required
                                     fluid
-                                    label='Titulo *'
-                                    maxLength="100">
+                                    label='Titulo'
+                                    maxLength="100"
+                                    width={10}>
                                     <InputMask
                                         placeholder="Informe o titulo do produto"
                                     /> 
@@ -36,8 +37,9 @@ export default function FormProduto () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='Código do Produto *'
-                                    maxLength="100">
+                                    label='Código do Produto'
+                                    maxLength="100"
+                                    width={6}>
                                     <InputMask
                                         placeholder="Informe o código do produto"
                                     /> 
@@ -46,36 +48,41 @@ export default function FormProduto () {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Input>
-                                <TextArea placeholder='Informe a descrição do produto' />
+                                <Form.Input
+                                label='Código do Produto'
+                                width={16}>
+                                <TextArea 
+                                placeholder='Informe a descrição do produto' 
+                                />
                                 </Form.Input>
                             </Form.Group>
 
                             <Form.Group>
 
                                 <Form.Input
-                                
+                                    required
                                     fluid
-                                    label='Valor Unitário *'
-                                    width={4}>
+                                    label='Valor Unitário'
+                                    width={8}>
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
                                     label='Tempo de Entrega Minimo em Minutos'
-                                    width={4}>
+                                    width={8}>
                                     <InputMask 
                                         placeholder="30"
+
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
                                     label='Tempo de Entrega Máximo em Minutos'
-                                    width={4}
-                                >
+                                    width={8}                                >
                                     <InputMask 
                                         placeholder="40"
+
                                     /> 
                                 </Form.Input>
 
