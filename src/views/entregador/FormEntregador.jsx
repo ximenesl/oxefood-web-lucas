@@ -1,6 +1,8 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, FormField, Radio } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 
 const estadosOptions = [
     { key: 'ac', value: 'ac', text: 'Acre' },
@@ -33,11 +35,57 @@ const estadosOptions = [
 
 export default function FormEntregador () {
 
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [rg, setRg] = useState();
+    const [dataNascimento, setDataNascimento] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [foneFixo, setFoneFixo] = useState();
+    const [qtdEntregas, setQtdEntregas] = useState();
+    const [valorFrete, setValorFrete] = useState();
+    const [rua, setRua] = useState();
+    const [numero, setNumero] = useState();
+    const [bairro, setBairro] = useState();
+    const [cidade, setCidade] = useState();
+    const [cep, setCep] = useState();
+    const [uf, setUf] = useState();
+    const [complemento, setComplemento] = useState();
+    const [ativo, setAtivo] = useState(true);
+    
+    function salvar() {
+
+		let entregadorRequest = {
+		     nome: nome,
+		     cpf: cpf,
+             rg: rg,
+		     dataNascimento: dataNascimento,
+		     foneCelular: foneCelular,
+		     foneFixo: foneFixo,
+             qtdEntregas: qtdEntregas,
+             valorFrete: valorFrete,
+             rua: rua,
+             numero: numero,
+             bairro: bairro,
+             cidade: cidade,
+             cep: cep,
+             uf: uf,
+             complemento: complemento,
+             ativo: ativo
+		}
+	
+		axios.post("http://localhost:8082/api/entregador", entregadorRequest)
+		.then((response) => {
+		     console.log('Cliente cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o um cliente.')
+		})
+	}
 
     return (
 
         <div>
-
+            <MenuSistema />
             <div style={{marginTop: '3%'}}>
 
                 <Container textAlign='justified' >
@@ -58,6 +106,8 @@ export default function FormEntregador () {
                                     fluid
                                     label='Nome'
                                     maxLength="100"
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
                                 />
 
                                 <Form.Input
@@ -68,6 +118,8 @@ export default function FormEntregador () {
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
+                                        value={cpf}
+                                        onChange={e => setCpf(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -75,6 +127,8 @@ export default function FormEntregador () {
                                     width={10}
                                     label='RG'
                                     maxLength="100"
+                                    value={rg}
+                                    onChange={e => setRg(e.target.value)}
                                 />
 
                             </Form.Group>
@@ -88,6 +142,8 @@ export default function FormEntregador () {
                                         mask="99/99/9999" 
                                         maskChar={null}
                                         placeholder="Ex: 20/03/1985"
+                                        value={dataNascimento}
+                                        onChange={e => setDataNascimento(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -98,6 +154,8 @@ export default function FormEntregador () {
                                     label='Fone Celular'>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        value={foneCelular}
+                                        onChange={e => setFoneCelular(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -107,6 +165,8 @@ export default function FormEntregador () {
                                     label='Fone Fixo'>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        value={foneFixo}
+                                        onChange={e => setFoneFixo(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -115,6 +175,8 @@ export default function FormEntregador () {
                                     fluid
                                     label='QTD Entregas Realizadas'
                                     maxLength="100"
+                                    value={qtdEntregas}
+                                    onChange={e => setQtdEntregas(e.target.value)}
                                 >
                                 </Form.Input>
 
@@ -123,10 +185,10 @@ export default function FormEntregador () {
                                     fluid
                                     label='Valor Por Frete'
                                     maxLength="100"
+                                    value={valorFrete}
+                                    onChange={e => setValorFrete(e.target.value)}
                                 >
                                 </Form.Input>
-
-
                             </Form.Group>
 
                             <Form.Group>
@@ -135,6 +197,8 @@ export default function FormEntregador () {
                                 fluid
                                 label='Rua'
                                 maxLength="100"
+                                value={rua}
+                                onChange={e => setRua(e.target.value)}
                                 >
                                 </Form.Input>
                                 <Form.Input
@@ -142,6 +206,8 @@ export default function FormEntregador () {
                                 fluid
                                 label='Número'
                                 maxLength="100"
+                                value={numero}
+                                onChange={e => setNumero(e.target.value)}
                                 >
                                 </Form.Input>
                             </Form.Group>
@@ -152,6 +218,8 @@ export default function FormEntregador () {
                                 fluid
                                 label='Bairro'
                                 maxLength="100"
+                                value={bairro}
+                                onChange={e => setBairro(e.target.value)}
                                 >
                                 </Form.Input>
                                 <Form.Input
@@ -159,14 +227,21 @@ export default function FormEntregador () {
                                 fluid
                                 label='Cidade'
                                 maxLength="100"
+                                value={cidade}
+                                onChange={e => setCidade(e.target.value)}
                                 >
                                 </Form.Input>
                                 <Form.Input
                                 width={3}
                                 fluid
                                 label='CEP'
-                                maxLength="100"
-                                >
+                                maxLength="100">
+                                    <InputMask 
+                                        mask="999999-999"
+                                        value={cep}
+                                        onChange={e => setCep(e.target.value)}
+                                    /> 
+
                                 </Form.Input>
                             </Form.Group>
 
@@ -175,6 +250,10 @@ export default function FormEntregador () {
                                 width={16}
                                 label='UF'
                                 Select placeholder='Selecione' options={estadosOptions}
+                                value={uf}
+                                onChange={(e, {value}) => {
+                                    setUf(value)
+                                }}
                                 >
                                 </Form.Select>
 
@@ -185,22 +264,27 @@ export default function FormEntregador () {
                                 width={16}
                                 label='Complemento'
                                 maxLength="100"
+                                value={complemento}
+                                onChange={e => setComplemento(e.target.value)}
                                 >
                                 </Form.Input>
 
                             </Form.Group>
 
-                            <Form.Group>
-                            <Form.Field label= 'Ativo:'>
-                            </Form.Field>
+                            <Form.Group inline>
+                            
+                            <label>Ativo: </label>
+
                             <Form.Radio
                             label='Sim'
-                            name='radioGruop'>
+                            checked={ativo}
+                            onChange={e => setAtivo(true)}>
                             </Form.Radio>
+
                             <Form.Radio
                             label='Não'
-                            name='radioGruop'
-                            >
+                            checked={!ativo}
+                            onChange={e => setAtivo(false)}>
                             </Form.Radio>
                             </Form.Group>
 
@@ -227,6 +311,7 @@ export default function FormEntregador () {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                onClick={() => salvar()}
                             >
                                 <Icon name='save' />
                                 Salvar
