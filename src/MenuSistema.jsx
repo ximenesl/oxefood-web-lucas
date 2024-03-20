@@ -2,54 +2,40 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 
-class MenuSistema extends React.Component{
+export default function MenuSistema (props) {
 
-   state = {
-       activeItem: 'home'
-   }
+   return(
+       <>
+           <Menu inverted>
+              
+               <Menu.Item
+                   name='home'
+                   active={props.tela === 'Home'}
+                   as={Link}
+                   to='/'
+               />
 
-   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+               <Menu.Item
+                   name='cliente'
+                   active={props.tela === 'Cliente'}
+                   as={Link}
+                   to='/form-cliente'
+               />
+               <Menu.Item
+                   name='produto'
+                   active={props.tela === 'Produto'}
+                   as={Link}
+                   to='/form-produto'
+               />
 
-   render(){
-       return(
-           <>
-               <Menu inverted>
-                  
-                   <Menu.Item
-                       name='home'
-                       active={this.state.activeItem === 'home'}
-                       onClick={this.handleItemClick}
-                       as={Link}
-                       to='/'
-                   />
-                   <Menu.Item
-                       name='cliente'
-                       active={this.state.activeItem === 'cliente'}
-                       onClick={this.handleItemClick}
-                       as={Link}
-                       to='/form-cliente'
-                   />
+               <Menu.Item
+                   name='entregador'
+                   active={props.tela === 'Entregador'}
+                   as={Link}
+                   to='/form-entregador'
+               />
 
-                   <Menu.Item
-                       name='produto'
-                       active={this.state.activeItem === 'produto'}
-                       onClick={this.handleItemClick}
-                       as={Link}
-                       to='/form-produto'
-                   />
-
-                   <Menu.Item
-                       name='entregador'
-                       active={this.state.activeItem === 'entregador'}
-                       onClick={this.handleItemClick}
-                       as={Link}
-                       to='/form-entregador'
-                   />
-
-               </Menu>
-           </>
-       )
-   }
+           </Menu>
+       </>
+   )
 }
-
-export default MenuSistema;
