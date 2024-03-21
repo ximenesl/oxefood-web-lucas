@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon, FormField, Radio } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 const estadosOptions = [
@@ -10,7 +11,7 @@ const estadosOptions = [
     { key: 'ap', value: 'ap', text: 'Amapá' },
     { key: 'am', value: 'am', text: 'Amazonas' },
     { key: 'ba', value: 'ba', text: 'Bahia' },
-    { key: 'ce', value: 'ad', text: 'Ceara' },
+    { key: 'ce', value: 'ce', text: 'Ceara' },
     { key: 'df', value: 'df', text: 'Distrito Federal' },
     { key: 'es', value: 'es', text: 'Espírito Santo' },
     { key: 'go', value: 'go', text: 'Goiás' },
@@ -75,10 +76,10 @@ export default function FormEntregador () {
 	
 		axios.post("http://localhost:8082/api/entregador", entregadorRequest)
 		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
+		     console.log('Entregador cadastrado com sucesso.')
 		})
 		.catch((error) => {
-		     console.log('Erro ao incluir o um cliente.')
+		     console.log('Erro ao incluir o um entregador.')
 		})
 	}
 
@@ -301,7 +302,7 @@ export default function FormEntregador () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
-                                Voltar
+                                <Link to={'/list-entregador'}>Voltar</Link>
                             </Button>
                                 
                             <Button

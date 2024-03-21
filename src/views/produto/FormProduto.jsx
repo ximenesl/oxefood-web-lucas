@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
@@ -26,10 +27,10 @@ export default function FormProduto () {
 	
 		axios.post("http://localhost:8082/api/produto", produtoRequest)
 		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
+		     console.log('Produto cadastrado com sucesso.')
 		})
 		.catch((error) => {
-		     console.log('Erro ao incluir o um cliente.')
+		     console.log('Erro ao incluir o um produto.')
 		})
 	}
 
@@ -148,7 +149,7 @@ export default function FormProduto () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
-                                Listar
+                                <Link to={'/list-produto'}>Listar</Link>
                             </Button>
                                 
                             <Button

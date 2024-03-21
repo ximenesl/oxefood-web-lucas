@@ -19,20 +19,20 @@ export default function MenuSistema (props) {
                    name='cliente'
                    active={props.tela === 'Cliente'}
                    as={Link}
-                   to='/form-cliente'
+                   to='/list-cliente'
                />
                <Menu.Item
                    name='produto'
                    active={props.tela === 'Produto'}
                    as={Link}
-                   to='/form-produto'
+                   to='/list-produto'
                />
 
                <Menu.Item
                    name='entregador'
                    active={props.tela === 'Entregador'}
                    as={Link}
-                   to='/form-entregador'
+                   to='/list-entregador'
                />
 
            </Menu>
