@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table, Modal, Header } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function ListProduto () {
+export default function ListFornecedor () {
 
    const [lista, setLista] = useState([]);
    const [openModal, setOpenModal] = useState(false);
@@ -16,44 +16,54 @@ export default function ListProduto () {
 
    function carregarLista() {
 
-       axios.get("http://localhost:8082/api/produto")
+       axios.get("http://localhost:8082/api/fornecedor")
        .then((response) => {
            setLista(response.data)
        })
    }
+   function formatarData(dataParam) {
 
-   function confirmaRemover(id) {
+    if (dataParam === null || dataParam === '' || dataParam === undefined) {
+        return ''
+    }
 
-    setOpenModal(true)
-    setIdRemover(id)
- }
+    let arrayData = dataParam.split('-');
+    return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+    }
+
+    function confirmaRemover(id) {
+
+       setOpenModal(true)
+       setIdRemover(id)
+    }
+    
+    async function remover() {
+
+        await axios.delete('http://localhost:8080/api/fornecedor/' + idRemover)
+        .then((response) => {
+  
+            console.log('Fornecedor removido com sucesso.')
+  
+            axios.get("http://localhost:8080/api/fornecedor")
+            .then((response) => {
+                setLista(response.data)
+            })
+        })
+        .catch((error) => {
+            console.log('Erro ao remover um fornecedor.')
+        })
+        setOpenModal(false)
+    }
  
- async function remover() {
-
-     await axios.delete('http://localhost:8080/api/produto/' + idRemover)
-     .then((response) => {
-
-         console.log('Produto removido com sucesso.')
-
-         axios.get("http://localhost:8080/api/produto")
-         .then((response) => {
-             setLista(response.data)
-         })
-     })
-     .catch((error) => {
-         console.log('Erro ao remover um produto.')
-     })
-     setOpenModal(false)
- }
 
 return(
     <div>
-        <MenuSistema tela={'produto'} />
+        <MenuSistema tela={'fornecedor'} />
         <div style={{marginTop: '3%'}}>
 
             <Container textAlign='justified' >
 
-                <h2> Produto </h2>
+                <h2> Fornecedor </h2>
                 <Divider />
 
                 <div style={{marginTop: '4%'}}>
@@ -64,7 +74,7 @@ return(
                         icon='clipboard outline'
                         floated='right'
                         as={Link}
-                        to='/form-produto'
+                        to='/form-fornecedor'
                     />
                        <br/><br/><br/>
                   
@@ -72,46 +82,45 @@ return(
 
                       <Table.Header>
                           <Table.Row>
-                              <Table.HeaderCell>Título</Table.HeaderCell>
-                              <Table.HeaderCell>Código do Produto</Table.HeaderCell>
-                              <Table.HeaderCell>Descrição</Table.HeaderCell>
-                              <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
-                              <Table.HeaderCell>Tempo de Entrega</Table.HeaderCell>
-                              <Table.HeaderCell>Tempo Máximo para Entregar</Table.HeaderCell>
+                              <Table.HeaderCell>Nome</Table.HeaderCell>
+                              <Table.HeaderCell>Endereço</Table.HeaderCell>
+                              <Table.HeaderCell>Data de Fundação</Table.HeaderCell>
+                              <Table.HeaderCell>Valor de Mercado</Table.HeaderCell>
+                              <Table.HeaderCell>Pagina Web</Table.HeaderCell>
+                              <Table.HeaderCell>Contato do Vendedor</Table.HeaderCell>
                               <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
                           </Table.Row>
                       </Table.Header>
                  
                       <Table.Body>
 
-                          { lista.map(produto => (
+                          { lista.map(fornecedor => (
 
-                              <Table.Row key={produto.id}>
-                                  <Table.Cell>{produto.titulo}</Table.Cell>
-                                  <Table.Cell>{produto.codigoProduto}</Table.Cell>
-                                  <Table.Cell>{produto.descricao}</Table.Cell>
-                                  <Table.Cell>{produto.valorUnitario}</Table.Cell>
-                                  <Table.Cell>{produto.tempoEntrega}</Table.Cell>
-                                  <Table.Cell>{produto.tempoMaximo}</Table.Cell>
-                                  <Table.Cell>{produto.ativo}</Table.Cell>
+                              <Table.Row key={fornecedor.id}>
+                                  <Table.Cell>{fornecedor.nome}</Table.Cell>
+                                  <Table.Cell>{fornecedor.endereco}</Table.Cell>
+                                  <Table.Cell>{formatarData(fornecedor.dataFundacao)}</Table.Cell>
+                                  <Table.Cell>{fornecedor.valorMercado}</Table.Cell>
+                                  <Table.Cell>{fornecedor.paginaWeb}</Table.Cell>
+                                  <Table.Cell>{fornecedor.contatoVendedor}</Table.Cell>
                                   <Table.Cell textAlign='center'>
 
                                       <Button
-                                          inverted
-                                          circular
-                                          color='green'
-                                          title='Clique aqui para editar os dados deste produto'
-                                          icon>
-                                               <Link to="/form-produto" state={{id: produto.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                            inverted
+                                            circular
+                                            color='green'
+                                            title='Clique aqui para editar os dados deste fornecedor'
+                                            icon>
+                                                <Link to="/form-fornecedor" state={{id: fornecedor.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
                                       </Button> &nbsp;
                           
                                       <Button
                                                inverted
                                                circular
                                                color='red'
-                                               title='Clique aqui para remover este produto'
+                                               title='Clique aqui para remover este fornecedor'
                                                icon
-                                               onClick={e => confirmaRemover(produto.id)}>
+                                               onClick={e => confirmaRemover(fornecedor.id)}>
                                                    <Icon name='trash' />
                                            </Button>
 
@@ -124,7 +133,7 @@ return(
                    </div>
                </Container>
            </div>
-           <Modal
+            <Modal
                 basic
                 onClose={() => setOpenModal(false)}
                 onOpen={() => setOpenModal(true)}
@@ -143,6 +152,7 @@ return(
                     </Button>
                 </Modal.Actions>
             </Modal>
+
        </div>
    )
 }
