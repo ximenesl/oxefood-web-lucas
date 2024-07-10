@@ -45,7 +45,9 @@ export default function FormProduto () {
 		     tempoEntrega: tempoEntrega,
 		     tempoMaximo: tempoMaximo
 		}
-	
+
+        console.log(produtoRequest)
+
         if (idProduto != null) { //Alteração:
 
             axios.put("http://localhost:8082/api/produto/" + idProduto, produtoRequest)

@@ -25,7 +25,7 @@ export default function FormFornecedor () {
             .then((response) => {
                 setIdFornecedor(response.data.id)
                 setNome(response.data.nome)
-                setEndereco(response.data.cpf)
+                setEndereco(response.data.endereco)
                 setDataFundacao(formatarData(response.data.dataFundacao))
                 setValorMercado(response.data.valorMercado)
                 setPaginaWeb(response.data.paginaWeb)
@@ -49,12 +49,14 @@ export default function FormFornecedor () {
 
 		let fornecedorRequest = {
 		     nome: nome,
-		     enderco: endereco,
+		     endereco: endereco,
 		     dataFundacao: dataFundacao,
 		     valorMercado: valorMercado,
 		     paginaWeb: paginaWeb,
              contatoVendedor: contatoVendedor
 		}
+
+        console.log(fornecedorRequest)
 	
         if (idFornecedor != null) { //Alteração:
 
@@ -110,12 +112,21 @@ export default function FormFornecedor () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='CPF'>
-                                    <InputMask
-                                        required
-                                        mask="999.999.999-99"
-                                        value={cpf}
-                                        onChange={e => setCpf(e.target.value)}
+                                    label='Endereço'
+                                    value={endereco}
+                                    onChange={e => setEndereco(e.target.value)}>
+                                </Form.Input>
+
+                                <Form.Input
+                                    fluid
+                                    label='Data Fundação'
+                                    width={6}>
+                                    <InputMask 
+                                        mask="99/99/9999" 
+                                        maskChar={null}
+                                        placeholder="Ex: 20/03/1985"
+                                        value={dataFundacao}
+                                        onChange={e => setDataFundacao(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -125,40 +136,35 @@ export default function FormFornecedor () {
 
                                 <Form.Input
                                     fluid
-                                    label='Fone Celular'
+                                    label='Valor de Mercado'
                                     width={6}>
                                     <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneCelular}
-                                        onChange={e => setFoneCelular(e.target.value)}
+                                        value={valorMercado}
+                                        onChange={e => setValorMercado(e.target.value)}
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-                                    label='Fone Fixo'
+                                    label='Página Web'
                                     width={6}>
                                     <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneFixo}
-                                        onChange={e => setFoneFixo(e.target.value)}
+                                        placeholder="www."
+                                        value={paginaWeb}
+                                        onChange={e => setPaginaWeb(e.target.value)}
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-                                    label='Data Nascimento'
-                                    width={6}
-                                >
+                                    label='Contato do Vendedor'
+                                    width={6}>
                                     <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-                                        value={dataNascimento}
-                                        onChange={e => setDataNascimento(e.target.value)}
+                                        mask="(99) 9999.9999"
+                                        value={contatoVendedor}
+                                        onChange={e => setContatoVendedor(e.target.value)}
                                     /> 
                                 </Form.Input>
-
                             </Form.Group>
                         
                         </Form>
