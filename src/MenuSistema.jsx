@@ -42,6 +42,13 @@ export default function MenuSistema (props) {
                    to='/list-fornecedor'
                />
 
+                <Menu.Item
+                   name='fabricante'
+                   active={props.tela === 'Fabricante'}
+                   as={Link}
+                   to='/list-fabricante'
+               />
+
            </Menu>
        </>
    )
